@@ -22,7 +22,7 @@ func main() {
 // Isso deixa o Goroutine bloqueado na linha 29 esperando indefinidamente.
 // A fmt.Printlnchamada na linha 30 nunca acontecerá.
 func leak() http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(strconv.Itoa(runtime.NumGoroutine())))
 		ch := make(chan int)
 
@@ -34,16 +34,16 @@ func leak() http.HandlerFunc {
 }
 
 func not_leak() http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(strconv.Itoa(runtime.NumGoroutine())))
 		ch := make(chan int)
 
-		go func (ch chan int) {
+		go func(ch chan int) {
 			ch <- 1
 		}(ch)
 
 		go func(ch chan int) {
-			val := <- ch
+			val := <-ch
 			fmt.Println("We received a value:", val)
 		}(ch)
 
@@ -51,7 +51,7 @@ func not_leak() http.HandlerFunc {
 }
 
 func leak1() http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(strconv.Itoa(runtime.NumGoroutine())))
 
 		go func() {
@@ -63,7 +63,7 @@ func leak1() http.HandlerFunc {
 }
 
 func not_leak1() http.HandlerFunc {
-	return func (w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(strconv.Itoa(runtime.NumGoroutine())))
 
 		go func() {

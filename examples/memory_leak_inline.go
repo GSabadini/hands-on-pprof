@@ -15,7 +15,7 @@ func main() {
 
 func leakyFunctionInline() {
 	s := make([]string, 3)
-	for i:= 0; i < 10000000; i++{
+	for i := 0; i < 10000000; i++ {
 		s = append(s, "magical pprof time")
 	}
 }

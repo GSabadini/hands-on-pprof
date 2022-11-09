@@ -21,7 +21,6 @@ func init() {
 	http.Handle("/leak-not-closed", LeakyFunction1())
 	//http.Handle("/leak-query", Query(db))
 
-
 	go http.ListenAndServe(":8080", nil)
 }
 
@@ -113,7 +112,7 @@ func Query(db *sql.DB) http.HandlerFunc {
 func LeakyFunction() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		s := make([]string, 3)
-		for i:= 0; i < 10000000; i++{
+		for i := 0; i < 10000000; i++ {
 			s = append(s, "magical pprof time")
 		}
 	}
@@ -151,7 +150,6 @@ func newMySQLHandler() (*sql.DB, error) {
 	//		return &sql.DB{}, err
 	//	}
 	//}
-
 
 	log.Println("Database connected")
 
